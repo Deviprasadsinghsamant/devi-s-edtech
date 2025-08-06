@@ -9,6 +9,7 @@ This is a comprehensive EdTech platform that allows students to browse and enrol
 ## Technology Stack
 
 ### Backend
+
 - **Runtime**: Node.js 18+
 - **Framework**: Express.js 4.18+
 - **Language**: TypeScript 4.9+
@@ -18,6 +19,7 @@ This is a comprehensive EdTech platform that allows students to browse and enrol
 - **Authentication**: Mock JWT-style with localStorage
 
 ### Frontend
+
 - **Framework**: Next.js 13+ with App Router
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS 3.3+
@@ -36,6 +38,7 @@ Frontend: Pages → Components → Context → GraphQL Client
 ## Quick Start
 
 ### Prerequisites
+
 - Node.js 18 or higher
 - PostgreSQL 14 or higher
 - npm package manager
@@ -43,6 +46,7 @@ Frontend: Pages → Components → Context → GraphQL Client
 ### Installation & Setup
 
 1. **Backend Setup**
+
    ```bash
    cd server
    npm install
@@ -67,18 +71,21 @@ Frontend: Pages → Components → Context → GraphQL Client
 ## Key Features
 
 ✅ **Complete Full-Stack Application**
+
 - GraphQL API with Apollo Server
 - Next.js frontend with TypeScript
 - PostgreSQL database with Prisma ORM
 - Role-based authentication system
 
 ✅ **Course Management System**
+
 - Browse courses with filtering and search
 - Student enrollment functionality
 - Course statistics and metrics
 - Real-time data updates
 
 ✅ **Modern UI/UX**
+
 - Responsive design with Tailwind CSS
 - Loading states and error handling
 - Clean, intuitive interface
@@ -110,4 +117,4 @@ nexusHorizon-assessment/
 
 ---
 
-*Built for NexusHorizon Assessment - A demonstration of modern full-stack development capabilities.*
+_Built for NexusHorizon Assessment - A demonstration of modern full-stack development capabilities._
