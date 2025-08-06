@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: nexus-horizon-backend
+    runtime: node
+    region: oregon
+    plan: free
+    buildCommand: npm ci && npx prisma generate && npm run build
+    startCommand: npx prisma migrate deploy && npm run start
+    healthCheckPath: /graphql
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: nexus-horizon-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: BCRYPT_ROUNDS
+        value: "12"
+      - key: CORS_ORIGIN
+        value: "https://nexus-horizon-frontend.vercel.app"
+
+databases:
+  - name: nexus-horizon-db
+    databaseName: nexus_horizon
+    user: nexus_user
+    region: oregon
+    plan: free
