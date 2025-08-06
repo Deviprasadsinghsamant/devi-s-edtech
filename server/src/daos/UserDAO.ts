@@ -53,7 +53,7 @@ export class UserDAO extends BaseDAO<User> {
     }
   }
 
-  async create(data: { name: string; email: string }): Promise<User> {
+  async create(data: { name: string; email: string; password?: string }): Promise<User> {
     try {
       return await this.prisma.user.create({
         data,

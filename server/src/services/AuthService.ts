@@ -1,12 +1,24 @@
 import { User } from "@prisma/client";
 import { UserDAO } from "../daos/UserDAO";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 import { config } from "../common/config";
 
 interface AuthPayload {
   user: User;
   token: string;
   expiresAt: Date;
+}
+
+interface RegisterInput {
+  name: string;
+  email: string;
+  password: string;
+}
+
+interface LoginInput {
+  email: string;
+  password: string;
 }
 
 export class AuthService {
@@ -16,6 +28,85 @@ export class AuthService {
     this.userDAO = new UserDAO();
   }
 
+  async register(input: RegisterInput): Promise<AuthPayload> {
+    try {
+      // Check if user already exists
+      const existingUser = await this.userDAO.findByEmail(input.email);
+      if (existingUser) {
+        throw new Error("User with this email already exists");
+      }
+
+      // Hash password
+      const hashedPassword = await bcrypt.hash(input.password, 10);
+
+      // Create new user
+      const user = await this.userDAO.create({
+        name: input.name,
+        email: input.email,
+        password: hashedPassword,
+      });
+
+      // Generate JWT token
+      const token = jwt.sign(
+        {
+          userId: user.id,
+          email: user.email,
+        },
+        config.auth.jwtSecret,
+        { expiresIn: "7d" }
+      );
+
+      const expiresAt = new Date();
+      expiresAt.setDate(expiresAt.getDate() + 7);
+
+      return {
+        user,
+        token,
+        expiresAt,
+      };
+    } catch (error) {
+      throw new Error(`Registration failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  async login(input: LoginInput): Promise<AuthPayload> {
+    try {
+      // Find user by email
+      const user = await this.userDAO.findByEmail(input.email);
+      if (!user) {
+        throw new Error("Invalid email or password");
+      }
+
+      // Verify password
+      const isValidPassword = await bcrypt.compare(input.password, user.password);
+      if (!isValidPassword) {
+        throw new Error("Invalid email or password");
+      }
+
+      // Generate JWT token
+      const token = jwt.sign(
+        {
+          userId: user.id,
+          email: user.email,
+        },
+        config.auth.jwtSecret,
+        { expiresIn: "7d" }
+      );
+
+      const expiresAt = new Date();
+      expiresAt.setDate(expiresAt.getDate() + 7);
+
+      return {
+        user,
+        token,
+        expiresAt,
+      };
+    } catch (error) {
+      throw new Error(`Login failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  // Keep the mock login for backward compatibility during transition
   async mockLogin(email: string): Promise<AuthPayload> {
     try {
       // Find or create user with this email
@@ -36,7 +127,7 @@ export class AuthService {
         });
       }
 
-      // Generate mock JWT token
+      // Generate JWT token
       const token = jwt.sign(
         {
           userId: user.id,

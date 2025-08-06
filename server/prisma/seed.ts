@@ -1,50 +1,59 @@
 import { PrismaClient, CourseLevel, UserRole } from "@prisma/client";
+import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
 async function main() {
   console.log("Starting database seeding...");
 
+  // Hash password for demo users
+  const defaultPassword = await bcrypt.hash("password123", 10);
+
   // Create sample users
   const users = await Promise.all([
     prisma.user.upsert({
       where: { email: "john.doe@example.com" },
-      update: {},
+      update: { password: defaultPassword },
       create: {
         name: "John Doe",
         email: "john.doe@example.com",
+        password: defaultPassword,
       },
     }),
     prisma.user.upsert({
       where: { email: "jane.smith@example.com" },
-      update: {},
+      update: { password: defaultPassword },
       create: {
         name: "Jane Smith",
         email: "jane.smith@example.com",
+        password: defaultPassword,
       },
     }),
     prisma.user.upsert({
       where: { email: "prof.wilson@example.com" },
-      update: {},
+      update: { password: defaultPassword },
       create: {
         name: "Prof. Wilson",
         email: "prof.wilson@example.com",
+        password: defaultPassword,
       },
     }),
     prisma.user.upsert({
       where: { email: "sarah.jones@example.com" },
-      update: {},
+      update: { password: defaultPassword },
       create: {
         name: "Sarah Jones",
         email: "sarah.jones@example.com",
+        password: defaultPassword,
       },
     }),
     prisma.user.upsert({
       where: { email: "mike.brown@example.com" },
-      update: {},
+      update: { password: defaultPassword },
       create: {
         name: "Mike Brown",
         email: "mike.brown@example.com",
+        password: defaultPassword,
       },
     }),
   ]);

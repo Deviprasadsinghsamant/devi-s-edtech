@@ -7,7 +7,19 @@ export const authTypeDefs = gql`
     expiresAt: String!
   }
 
+  input RegisterInput {
+    name: String!
+    email: String!
+    password: String!
+  }
+
+  input LoginInput {
+    email: String!
+    password: String!
+  }
+
   extend type Mutation {
-    login(email: String!): AuthPayload!
+    register(input: RegisterInput!): AuthPayload!
+    login(input: LoginInput!): AuthPayload!
   }
 `;

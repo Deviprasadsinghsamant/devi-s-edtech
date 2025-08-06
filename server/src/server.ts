@@ -50,13 +50,24 @@ export async function createServer() {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({ req }) => {
+    context: async ({ req }) => {
       // Extract user from token if needed
       const token = req.headers.authorization?.replace("Bearer ", "");
+      let user = null;
+
+      if (token) {
+        try {
+          const { AuthService } = await import("./services/AuthService");
+          const authService = new AuthService();
+          user = await authService.validateToken(token);
+        } catch (error) {
+          console.error("Token validation error:", error);
+        }
+      }
 
       return {
         req,
-        user: null, // TODO: Implement JWT validation if needed
+        user,
       };
     },
     introspection: config.server.nodeEnv === "development",
