@@ -2,6 +2,34 @@
 
 A modern full-stack learning platform built with GraphQL API, role-based access control, and course management system.
 
+## 🚀 Quick Local Setup
+
+For running the complete system locally with local database:
+
+### Automated Setup (Windows)
+
+1. **Run the database setup script:**
+   ```powershell
+   .\setup-database.ps1
+   ```
+
+2. **Start both servers:**
+   ```powershell
+   .\start-local.ps1
+   ```
+   Or use the batch file:
+   ```cmd
+   start-local.bat
+   ```
+
+3. **Access the application:**
+   - Frontend: http://localhost:3000
+   - Backend GraphQL: http://localhost:4000/graphql
+
+### Manual Setup
+
+See [LOCAL_SETUP.md](./LOCAL_SETUP.md) for detailed manual setup instructions.
+
 ## Project Overview
 
 This is a comprehensive EdTech platform that allows students to browse and enroll in courses, and professors to manage their course offerings. The platform features a modern React frontend with Next.js and a robust Node.js backend with GraphQL API.

@@ -25,10 +25,10 @@ export async function createServer() {
     })
   );
 
-  // CORS middleware
+  // CORS middleware - Allow all origins for now
   app.use(
     cors({
-      origin: config.server.corsOrigin,
+      origin: true, // Allow all origins
       credentials: true,
     })
   );
@@ -36,6 +36,19 @@ export async function createServer() {
   // Body parsing middleware
   app.use(express.json({ limit: "10mb" }));
   app.use(express.urlencoded({ extended: true }));
+
+  // Root endpoint
+  app.get("/", (req, res) => {
+    res.status(200).json({
+      message: "Welcome to Devi's EdTech API",
+      version: "1.0.0",
+      endpoints: {
+        health: "/health",
+        graphql: "/graphql",
+      },
+      documentation: "GraphQL endpoint available at /graphql",
+    });
+  });
 
   // Health check endpoint
   app.get("/health", (req, res) => {
