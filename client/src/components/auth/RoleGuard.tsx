@@ -23,7 +23,6 @@ export const RoleGuard: React.FC<RoleGuardProps> = ({
     return <>{fallback}</>;
   }
 
-  // If courseId is provided, check specific course role
   if (courseId) {
     const hasRequiredRole = allowedRoles.some((role) =>
       hasRole(courseId, role)
@@ -32,7 +31,6 @@ export const RoleGuard: React.FC<RoleGuardProps> = ({
       return <>{fallback}</>;
     }
   } else {
-    // Check general user role
     if (!allowedRoles.includes(user.role)) {
       return <>{fallback}</>;
     }

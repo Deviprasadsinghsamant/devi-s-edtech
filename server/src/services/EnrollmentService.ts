@@ -40,7 +40,6 @@ export class EnrollmentService {
 
   async getUserEnrollments(userId: string): Promise<Enrollment[]> {
     try {
-      // Verify user exists
       const user = await this.userDAO.findById(userId);
       if (!user) {
         throw new Error("User not found");
@@ -55,7 +54,6 @@ export class EnrollmentService {
 
   async getCourseEnrollments(courseId: string): Promise<Enrollment[]> {
     try {
-      // Verify course exists
       const course = await this.courseDAO.findById(courseId);
       if (!course) {
         throw new Error("Course not found");
@@ -70,19 +68,16 @@ export class EnrollmentService {
 
   async enrollUser(data: EnrollmentInput): Promise<Enrollment> {
     try {
-      // Verify user exists
       const user = await this.userDAO.findById(data.userId);
       if (!user) {
         throw new Error("User not found");
       }
 
-      // Verify course exists
       const course = await this.courseDAO.findById(data.courseId);
       if (!course) {
         throw new Error("Course not found");
       }
 
-      // Check if user is already enrolled
       const existingEnrollment = await this.enrollmentDAO.findByUserAndCourse(
         data.userId,
         data.courseId
@@ -101,7 +96,6 @@ export class EnrollmentService {
 
   async unenrollUser(userId: string, courseId: string): Promise<boolean> {
     try {
-      // Verify enrollment exists
       const existingEnrollment = await this.enrollmentDAO.findByUserAndCourse(
         userId,
         courseId

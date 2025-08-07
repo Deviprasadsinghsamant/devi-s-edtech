@@ -37,7 +37,7 @@ export const usePermissions = () => {
       case "create":
         return user?.role === UserRole.PROFESSOR;
       case "read":
-        return true; // All authenticated users can read courses
+        return true;
       case "update":
         return courseId ? hasRole(courseId, UserRole.PROFESSOR) : false;
       case "delete":
@@ -86,11 +86,11 @@ export const usePermissions = () => {
 
     switch (action) {
       case "read":
-        return true; // All authenticated users can read basic user info
+        return true;
       case "update":
-        return targetUserId === user?.id; // Users can only update themselves
+        return targetUserId === user?.id;
       case "delete":
-        return targetUserId === user?.id; // Users can only delete themselves
+        return targetUserId === user?.id;
       default:
         return false;
     }

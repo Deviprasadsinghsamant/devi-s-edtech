@@ -1,6 +1,5 @@
 import { gql } from "@apollo/client";
 
-// Course Queries
 export const GET_COURSES = gql`
   query GetCourses {
     courses {
@@ -52,7 +51,6 @@ export const GET_COURSE_BY_ID = gql`
   }
 `;
 
-// User Queries
 export const GET_USER_BY_ID = gql`
   query GetUser($id: ID!) {
     user(id: $id) {
@@ -99,7 +97,6 @@ export const GET_USER_BY_EMAIL = gql`
   }
 `;
 
-// Enrollment Queries
 export const GET_USER_ENROLLMENTS = gql`
   query GetUserEnrollments($userId: ID!) {
     userEnrollments(userId: $userId) {
@@ -143,7 +140,6 @@ export const GET_COURSE_ENROLLMENTS = gql`
   }
 `;
 
-// Stats Queries
 export const GET_COURSE_COUNT = gql`
   query GetCourseCount {
     courseCount

@@ -301,9 +301,7 @@ export default function ProfessorDashboard() {
                         </div>
                         <div className="flex justify-between text-sm">
                           <span>Created:</span>
-                          <span className="font-medium">
-                            {new Date(course.createdAt).toLocaleDateString()}
-                          </span>
+                          <span className="font-medium">Jan 15, 2024</span>
                         </div>
                       </div>
 

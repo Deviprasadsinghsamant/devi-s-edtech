@@ -30,23 +30,19 @@ export class AuthService {
 
   async register(input: RegisterInput): Promise<AuthPayload> {
     try {
-      // Check if user already exists
       const existingUser = await this.userDAO.findByEmail(input.email);
       if (existingUser) {
         throw new Error("User with this email already exists");
       }
 
-      // Hash password
       const hashedPassword = await bcrypt.hash(input.password, 10);
 
-      // Create new user
       const user = await this.userDAO.create({
         name: input.name,
         email: input.email,
         password: hashedPassword,
       });
 
-      // Generate JWT token
       const token = jwt.sign(
         {
           userId: user.id,
@@ -65,25 +61,29 @@ export class AuthService {
         expiresAt,
       };
     } catch (error) {
-      throw new Error(`Registration failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Registration failed: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`
+      );
     }
   }
 
   async login(input: LoginInput): Promise<AuthPayload> {
     try {
-      // Find user by email
       const user = await this.userDAO.findByEmail(input.email);
       if (!user) {
         throw new Error("Invalid email or password");
       }
 
-      // Verify password
-      const isValidPassword = await bcrypt.compare(input.password, user.password);
+      const isValidPassword = await bcrypt.compare(
+        input.password,
+        user.password
+      );
       if (!isValidPassword) {
         throw new Error("Invalid email or password");
       }
 
-      // Generate JWT token
       const token = jwt.sign(
         {
           userId: user.id,
@@ -102,18 +102,19 @@ export class AuthService {
         expiresAt,
       };
     } catch (error) {
-      throw new Error(`Login failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Login failed: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`
+      );
     }
   }
 
-  // Keep the mock login for backward compatibility during transition
   async mockLogin(email: string): Promise<AuthPayload> {
     try {
-      // Find or create user with this email
       let user = await this.userDAO.findByEmail(email);
 
       if (!user) {
-        // Create a new user if doesn't exist
         const name = email
           .split("@")[0]
           .replace(/[._]/g, " ")
@@ -127,7 +128,6 @@ export class AuthService {
         });
       }
 
-      // Generate JWT token
       const token = jwt.sign(
         {
           userId: user.id,

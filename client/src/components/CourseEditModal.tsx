@@ -35,7 +35,6 @@ export const CourseEditModal: React.FC<CourseEditModalProps> = ({
     },
   });
 
-  // Reset form data when course changes
   useEffect(() => {
     setFormData({
       title: course.title,
@@ -46,7 +45,7 @@ export const CourseEditModal: React.FC<CourseEditModalProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       await updateCourse({
         variables: {
@@ -64,7 +63,7 @@ export const CourseEditModal: React.FC<CourseEditModalProps> = ({
   };
 
   const handleInputChange = (field: keyof typeof formData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   if (!isOpen) return null;
@@ -84,9 +83,11 @@ export const CourseEditModal: React.FC<CourseEditModalProps> = ({
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Title Field */}
           <div>
-            <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="title"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Course Title
             </label>
             <Input
@@ -100,9 +101,11 @@ export const CourseEditModal: React.FC<CourseEditModalProps> = ({
             />
           </div>
 
-          {/* Description Field */}
           <div>
-            <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="description"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Description
             </label>
             <textarea
@@ -119,13 +122,18 @@ export const CourseEditModal: React.FC<CourseEditModalProps> = ({
 
           {/* Level Field */}
           <div>
-            <label htmlFor="level" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="level"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Course Level
             </label>
             <select
               id="level"
               value={formData.level}
-              onChange={(e) => handleInputChange("level", e.target.value as CourseLevel)}
+              onChange={(e) =>
+                handleInputChange("level", e.target.value as CourseLevel)
+              }
               required
               disabled={loading}
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"

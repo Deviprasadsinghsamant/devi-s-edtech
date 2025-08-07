@@ -49,7 +49,6 @@ export const CourseProvider: React.FC<CourseProviderProps> = ({ children }) => {
   const [error, setError] = useState<string | null>(null);
   const { refreshUser } = useAuth();
 
-  // Queries
   const {
     data: coursesData,
     loading: coursesLoading,
@@ -60,11 +59,10 @@ export const CourseProvider: React.FC<CourseProviderProps> = ({ children }) => {
   const { refetch: refetchCourseQuery } = useQuery<{ course: Course }>(
     GET_COURSE_BY_ID,
     {
-      skip: true, // We'll call this manually
+      skip: true,
     }
   );
 
-  // Mutations
   const [enrollMutation] = useMutation(ENROLL_IN_COURSE);
   const [unenrollMutation] = useMutation(UNENROLL_FROM_COURSE);
   const [updateCourseMutation] = useMutation(UPDATE_COURSE);
@@ -114,10 +112,8 @@ export const CourseProvider: React.FC<CourseProviderProps> = ({ children }) => {
         awaitRefetchQueries: true,
       });
 
-      // Refresh user data to update enrollment information in AuthContext
       await refreshUser();
 
-      // Update current course if it's the one being enrolled in
       if (currentCourse?.id === input.courseId) {
         await fetchCourse(input.courseId);
       }
@@ -146,7 +142,6 @@ export const CourseProvider: React.FC<CourseProviderProps> = ({ children }) => {
         awaitRefetchQueries: true,
       });
 
-      // Update current course if it's the one being unenrolled from
       if (currentCourse?.id === courseId) {
         await fetchCourse(courseId);
       }
@@ -175,7 +170,6 @@ export const CourseProvider: React.FC<CourseProviderProps> = ({ children }) => {
         awaitRefetchQueries: true,
       });
 
-      // Update current course if it's the one being updated
       if (currentCourse?.id === id && data?.updateCourse) {
         setCurrentCourse(data.updateCourse);
       }
@@ -198,7 +192,6 @@ export const CourseProvider: React.FC<CourseProviderProps> = ({ children }) => {
     }
   };
 
-  // Update error from GraphQL errors
   React.useEffect(() => {
     if (coursesError) {
       setError(coursesError.message);

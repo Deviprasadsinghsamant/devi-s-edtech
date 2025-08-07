@@ -10,7 +10,6 @@ import { globalErrorHandler } from "./common/lib/errorHandler";
 export async function createServer() {
   const app = express();
 
-  // Security middleware
   app.use(
     helmet({
       contentSecurityPolicy: {
@@ -25,19 +24,16 @@ export async function createServer() {
     })
   );
 
-  // CORS middleware - Allow all origins for now
   app.use(
     cors({
-      origin: true, // Allow all origins
+      origin: true,
       credentials: true,
     })
   );
 
-  // Body parsing middleware
   app.use(express.json({ limit: "10mb" }));
   app.use(express.urlencoded({ extended: true }));
 
-  // Root endpoint
   app.get("/", (req, res) => {
     res.status(200).json({
       message: "Welcome to Devi's EdTech API",
@@ -50,7 +46,6 @@ export async function createServer() {
     });
   });
 
-  // Health check endpoint
   app.get("/health", (req, res) => {
     res.status(200).json({
       status: "ok",
@@ -59,12 +54,10 @@ export async function createServer() {
     });
   });
 
-  // Create Apollo Server
   const server = new ApolloServer({
     typeDefs,
     resolvers,
     context: async ({ req }) => {
-      // Extract user from token if needed
       const token = req.headers.authorization?.replace("Bearer ", "");
       let user = null;
 
@@ -91,10 +84,9 @@ export async function createServer() {
   server.applyMiddleware({
     app: app as any,
     path: "/graphql",
-    cors: false, // We handle CORS above
+    cors: false,
   });
 
-  // Global error handler (should be last)
   app.use(globalErrorHandler);
 
   return { app, server };
@@ -102,11 +94,9 @@ export async function createServer() {
 
 export async function startServer() {
   try {
-    // Connect to database
     await database.connect();
     console.log("Database connection established");
 
-    // Create and start server
     const { app } = await createServer();
 
     const PORT = config.server.port;

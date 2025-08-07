@@ -5,7 +5,6 @@ import { authResolvers } from "./authResolvers";
 import { GraphQLScalarType } from "graphql";
 import { Kind } from "graphql/language";
 
-// Simple DateTime scalar
 const DateTimeScalar = new GraphQLScalarType({
   name: "DateTime",
   description: "DateTime custom scalar type",

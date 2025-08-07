@@ -20,7 +20,7 @@ export default function HomePage() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    password: ""
+    password: "",
   });
   const [authLoading, setAuthLoading] = useState(false);
 
@@ -38,25 +38,28 @@ export default function HomePage() {
     setAuthLoading(true);
     try {
       if (isLoginMode) {
-        await login({ email: formData.email.trim(), password: formData.password });
+        await login({
+          email: formData.email.trim(),
+          password: formData.password,
+        });
       } else {
-        await register({ 
-          name: formData.name.trim(), 
-          email: formData.email.trim(), 
-          password: formData.password 
+        await register({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          password: formData.password,
         });
       }
     } catch (error) {
-      console.error(`${isLoginMode ? 'Login' : 'Registration'} failed:`, error);
+      console.error(`${isLoginMode ? "Login" : "Registration"} failed:`, error);
     } finally {
       setAuthLoading(false);
     }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   };
 
@@ -90,8 +93,8 @@ export default function HomePage() {
                   onClick={() => setIsLoginMode(true)}
                   className={`px-4 py-2 text-sm font-medium rounded-md ${
                     isLoginMode
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                   }`}
                 >
                   Login
@@ -101,8 +104,8 @@ export default function HomePage() {
                   onClick={() => setIsLoginMode(false)}
                   className={`px-4 py-2 text-sm font-medium rounded-md ${
                     !isLoginMode
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                   }`}
                 >
                   Register
@@ -144,19 +147,15 @@ export default function HomePage() {
                 type="submit"
                 className="w-full"
                 loading={authLoading}
-                disabled={!formData.email.trim() || !formData.password.trim() || (!isLoginMode && !formData.name.trim())}
+                disabled={
+                  !formData.email.trim() ||
+                  !formData.password.trim() ||
+                  (!isLoginMode && !formData.name.trim())
+                }
               >
-                {isLoginMode ? 'Login' : 'Register'}
+                {isLoginMode ? "Login" : "Register"}
               </Button>
             </form>
-
-            <div className="mt-6 text-sm text-gray-500 text-center">
-              <p className="mb-2">Demo accounts:</p>
-              <div className="space-y-1">
-                <p>Student: john@example.com</p>
-                <p>Professor: jane@example.com</p>
-              </div>
-            </div>
           </div>
         </div>
       </div>

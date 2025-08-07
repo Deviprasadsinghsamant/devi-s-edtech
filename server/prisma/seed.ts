@@ -6,10 +6,8 @@ const prisma = new PrismaClient();
 async function main() {
   console.log("Starting database seeding...");
 
-  // Hash password for demo users
   const defaultPassword = await bcrypt.hash("password123", 10);
 
-  // Create sample users
   const users = await Promise.all([
     prisma.user.upsert({
       where: { email: "john.doe@example.com" },
@@ -33,7 +31,7 @@ async function main() {
       where: { email: "prof.wilson@example.com" },
       update: { password: defaultPassword },
       create: {
-        name: "Prof. Wilson",
+        name: "Prof Wilson",
         email: "prof.wilson@example.com",
         password: defaultPassword,
       },
@@ -60,7 +58,6 @@ async function main() {
 
   console.log("Users created:", users.length);
 
-  // Create sample courses
   const courses = await Promise.all([
     prisma.course.upsert({
       where: { id: "course-1" },
@@ -132,9 +129,7 @@ async function main() {
 
   console.log("Courses created:", courses.length);
 
-  // Create sample enrollments
   const enrollments = await Promise.all([
-    // John Doe enrollments
     prisma.enrollment.upsert({
       where: {
         userId_courseId: {
@@ -163,7 +158,6 @@ async function main() {
         role: UserRole.STUDENT,
       },
     }),
-    // Jane Smith enrollments
     prisma.enrollment.upsert({
       where: {
         userId_courseId: {
@@ -192,7 +186,6 @@ async function main() {
         role: UserRole.STUDENT,
       },
     }),
-    // Prof Wilson as professor
     prisma.enrollment.upsert({
       where: {
         userId_courseId: {
@@ -221,7 +214,6 @@ async function main() {
         role: UserRole.PROFESSOR,
       },
     }),
-    // Sarah Jones enrollments
     prisma.enrollment.upsert({
       where: {
         userId_courseId: {
@@ -236,7 +228,6 @@ async function main() {
         role: UserRole.STUDENT,
       },
     }),
-    // Mike Brown as professor
     prisma.enrollment.upsert({
       where: {
         userId_courseId: {

@@ -1,6 +1,5 @@
 import dotenv from "dotenv";
 
-// Load environment variables
 dotenv.config();
 
 interface Config {
@@ -39,7 +38,6 @@ export const config: Config = {
   },
 };
 
-// Validate required environment variables
 const requiredEnvVars = ["DATABASE_URL", "JWT_SECRET"];
 
 for (const envVar of requiredEnvVars) {

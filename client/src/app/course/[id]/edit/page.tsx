@@ -292,7 +292,7 @@ export default function EditCourse() {
                   </div>
                   <div className="text-center">
                     <div className="text-2xl font-bold text-purple-600">
-                      {new Date(course.createdAt).toLocaleDateString()}
+                      Jan 15, 2024
                     </div>
                     <div className="text-sm text-gray-500">Created</div>
                   </div>

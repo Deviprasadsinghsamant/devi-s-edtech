@@ -64,7 +64,6 @@ export class CourseService {
         throw new Error("Course not found");
       }
 
-      // If userId is provided, validate that user has professor role
       if (userId) {
         const isProfessor = await this.enrollmentDAO.checkUserRole(
           userId,

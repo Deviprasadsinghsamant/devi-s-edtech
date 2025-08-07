@@ -48,9 +48,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const [loginMutation] = useMutation<{ login: AuthPayload }>(LOGIN_MUTATION);
-  const [registerMutation] = useMutation<{ register: AuthPayload }>(REGISTER_MUTATION);
+  const [registerMutation] = useMutation<{ register: AuthPayload }>(
+    REGISTER_MUTATION
+  );
 
-  // Load user from localStorage on mount
   useEffect(() => {
     const loadUserFromStorage = () => {
       try {
@@ -63,7 +64,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
       } catch (error) {
         console.error("Error loading user from storage:", error);
-        // Clear invalid data
         localStorage.removeItem("auth_user");
         localStorage.removeItem("auth_token");
       } finally {
@@ -128,16 +128,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const refreshUser = async (): Promise<void> => {
     if (!user) return;
-    
+
     try {
-      // Re-login to get fresh user data with updated enrollments
       const { data } = await loginMutation({
         variables: {
           input: {
             email: user.email,
-            password: "password123" // This is a temporary solution
-          }
-        }
+            password: "password123",
+          },
+        },
       });
 
       if (data?.login) {

@@ -5,8 +5,6 @@ export const useRoleAccess = () => {
   const { user, hasRole, isEnrolledInCourse, getUserRoleInCourse } = useAuth();
 
   const canCreateCourse = () => {
-    // For now, any authenticated user can create courses
-    // In a real app, you might want to add admin permissions
     return !!user;
   };
 
@@ -35,13 +33,19 @@ export const useRoleAccess = () => {
   };
 
   const isProfessor = () => {
-    // Check if user is a professor in any course
-    return user?.enrollments?.some(enrollment => enrollment.role === UserRole.PROFESSOR) || false;
+    return (
+      user?.enrollments?.some(
+        (enrollment) => enrollment.role === UserRole.PROFESSOR
+      ) || false
+    );
   };
 
   const isStudent = () => {
-    // Check if user is a student in any course
-    return user?.enrollments?.some(enrollment => enrollment.role === UserRole.STUDENT) || false;
+    return (
+      user?.enrollments?.some(
+        (enrollment) => enrollment.role === UserRole.STUDENT
+      ) || false
+    );
   };
 
   const isProfessorOfCourse = (courseId: string) => {

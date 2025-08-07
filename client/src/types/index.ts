@@ -40,7 +40,6 @@ export interface Enrollment {
   course: Course;
 }
 
-// Input Types
 export interface CreateUserInput {
   name: string;
   email: string;
@@ -74,7 +73,6 @@ export interface CourseFilter {
   hasEnrollments?: boolean;
 }
 
-// Auth Types
 export interface AuthPayload {
   user: User;
   token: string;

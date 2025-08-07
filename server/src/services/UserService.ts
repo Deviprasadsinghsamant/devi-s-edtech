@@ -37,7 +37,6 @@ export class UserService {
 
   async createUser(data: { name: string; email: string }): Promise<User> {
     try {
-      // Check if user with email already exists
       const existingUser = await this.userDAO.findByEmail(data.email);
       if (existingUser) {
         throw new Error("User with this email already exists");
@@ -60,7 +59,6 @@ export class UserService {
         throw new Error("User not found");
       }
 
-      // Check if email is being updated and if it's already taken
       if (data.email && data.email !== existingUser.email) {
         const userWithEmail = await this.userDAO.findByEmail(data.email);
         if (userWithEmail) {

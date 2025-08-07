@@ -1,6 +1,5 @@
 import { gql } from "@apollo/client";
 
-// Authentication Mutations
 export const REGISTER_MUTATION = gql`
   mutation Register($input: RegisterInput!) {
     register(input: $input) {
@@ -47,7 +46,6 @@ export const LOGIN_MUTATION = gql`
   }
 `;
 
-// Course Mutations
 export const CREATE_COURSE = gql`
   mutation CreateCourse($input: CreateCourseInput!) {
     createCourse(input: $input) {
@@ -88,7 +86,6 @@ export const DELETE_COURSE = gql`
   }
 `;
 
-// Enrollment Mutations
 export const ENROLL_IN_COURSE = gql`
   mutation EnrollInCourse($input: EnrollmentInput!) {
     enrollInCourse(input: $input) {

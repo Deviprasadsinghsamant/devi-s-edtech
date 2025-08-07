@@ -6,7 +6,6 @@ let app: any = null;
 
 export default async function handler(req: any, res: any) {
   try {
-    // Initialize app if not already done
     if (!app) {
       await database.connect();
       console.log("Database connection established");
@@ -15,7 +14,6 @@ export default async function handler(req: any, res: any) {
       app = serverInstance.app;
     }
 
-    // Handle the request with Express app
     return new Promise((resolve, reject) => {
       app(req, res, (err: any) => {
         if (err) {
