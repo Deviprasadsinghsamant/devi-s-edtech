@@ -54,7 +54,6 @@ export const Header: React.FC = () => {
               <>
                 <div className="text-sm text-gray-700">
                   Welcome, <span className="font-medium">{user.name}</span>
-                  <span className="text-gray-500 ml-1">({user.role})</span>
                 </div>
                 <Button variant="ghost" size="sm" onClick={logout}>
                   Logout
